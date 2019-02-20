@@ -1,0 +1,43 @@
+<div>
+  <span *ngIf="options?.sort"><input type="text" class="text" name="searchText" /></span>
+  <table>
+    <thead>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Age</th>
+      <th>
+        <span>
+          Select All
+          <i [ngClass]="selectedAll == true ? 'fa fa-check-square-o' : 'fa fa-square-o'" (click)="onClickSelectAll()"></i>
+        </span>
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of dataSource | slice:startLimit:endLimit; let ind=index;">
+        <td>{{row.firstName}}</td>
+        <td>{{row.lastName}}</td>
+        <td>{{row.age}}</td>
+        <td>
+          <span>
+              <i [ngClass]="row.selected == true ? 'fa fa-check-square-o' : 'fa fa-square-o'" (click)="onClickCheckBox(row)"></i>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <ul class="page-number-ul" *ngIf="pageNumbers.length > 0">
+        <li (click)="onClickPageNumber(1)"><i class="fa fa-backward" aria-hidden="true"></i></li>
+        <li *ngFor="let number of pageNumbers" (click)="onClickPageNumber(number)" [class.active]="activePageNumber == number">
+          {{number}}
+        </li>
+        <li (click)="onClickPageNumber(pageNumbers.length)"><i class="fa fa-forward" aria-hidden="true"></i></li>
+      </ul>
+      <ul class="rows-on-page-ul" *ngIf="options?.paginationOptions.rowsOnPageOptions.length > 0">
+        <li *ngFor="let number of options?.paginationOptions.rowsOnPageOptions" (click)="onClickNumberOfRows(number)"
+          [class.active]="rowsOnPage == number">
+          {{number}}
+        </li>
+      </ul>
+    </tfoot>
+  </table>
+</div>
